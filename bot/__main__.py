@@ -64,11 +64,11 @@ async def upload_handler(client, message):
                 if len(splitted_msg) == 2:
                     url, filename = splitted_msg
                     if head(url, allow_redirects=True).headers.get('content-length'):
-                        link = f'http://linkapi.net/open/create_item?api_key={pdisk_api}&content_src={url}&link_type=link&title={filename}'
+                        link = f'https://pdisk.pro/api/upload/url?key={pdisk_api}&url={url}'
                         response = post(link)
                         if response.status_code == 200:
                             videoid = response.json()["data"]["item_id"]
-                            await message.reply_text(f"<b>Your Video is successfully uploaded to Pdisk.</b>\nLink <code>https://pdisk.net/share-video?videoid={videoid}</code>\n\n<b>If this link shows '<i>File is not available</i>' then wait for few minutes and check it later.</b>", parse_mode = 'html')
+                            await message.reply_text(f"<b>Your Video is successfully uploaded to Pdisk.</b>\nLink <code>https://pdisk.pro/{videoid}</code>\n\n<b>If this link shows '<i>File is not available</i>' then wait for few minutes and check it later.</b>", parse_mode = 'html')
                             return
                     await message.reply_text(unsuccessful_upload, parse_mode = 'html')
                     return
